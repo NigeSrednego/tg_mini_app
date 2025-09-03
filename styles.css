@@ -1,0 +1,162 @@
+:root{
+  /* Сапфирово-фиолетовая палитра */
+  --bg1: #0f1433;  /* тёмный сапфир */
+  --bg2: #1b1f4a;  /* более светлый сапфир */
+  --bg3: #3b1d68;  /* фиолетовый */
+  --glass: rgba(255,255,255,0.08);
+  --glass-strong: rgba(255,255,255,0.12);
+  --text: #e9ecf5;
+  --muted: #b8bdd2;
+  --accent: #9f8cff;   /* светлый аметист */
+  --accent-2: #68b6ff; /* холодный сапфир для градиента */
+  --border: rgba(255,255,255,0.14);
+  --shadow: 0 8px 24px rgba(7,10,34,0.45);
+  --radius: 16px;
+}
+
+/* Базовая типографика с адаптивным масштабом */
+html{
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
+  font-size: clamp(14px, 3.6vw, 16px);
+  color: var(--text);
+  background: radial-gradient(120% 120% at 10% 0%, var(--bg3) 0%, var(--bg2) 35%, var(--bg1) 70%) fixed;
+  min-height: 100%;
+}
+body{
+  margin: 0;
+  min-height: 100dvh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  /* декоративные переливы */
+  background:
+    radial-gradient(90rem 90rem at 120% -10%, rgba(159,140,255,0.25) 0%, transparent 60%),
+    radial-gradient(70rem 70rem at -20% 120%, rgba(104,182,255,0.18) 0%, transparent 60%);
+  backdrop-filter: saturate(1.05);
+}
+/* Контейнер для ограниченной ширины мини-окна */
+.wrap{
+  width: min(480px, 100%);
+  margin-inline: auto;
+  padding: 12px 14px;
+  box-sizing: border-box;
+}
+
+/* Верхняя панель с поиском */
+.search-card{
+  background: var(--glass);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  border-radius: var(--radius);
+  padding: 10px;
+  position: sticky;
+  top: 8px;
+  z-index: 10;
+  backdrop-filter: blur(6px);
+}
+.search-row{
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  align-items: center;
+}
+.search-input{
+  width: 100%;
+  font-size: 1rem;
+  color: var(--text);
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  outline: none;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.search-input::placeholder{ color: var(--muted); }
+.search-input:focus{
+  border-color: color-mix(in oklab, var(--accent) 70%, white 0%);
+  box-shadow: 0 0 0 3px rgba(159,140,255,0.15);
+}
+.icon-btn{
+  display: inline-grid;
+  place-items: center;
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.03));
+  color: var(--text);
+  cursor: pointer;
+  transition: transform .08s ease, background .2s ease, border-color .2s ease;
+}
+.icon-btn:hover{
+  background: var(--glass-strong);
+  border-color: color-mix(in oklab, var(--accent-2) 40%, white 0%);
+}
+.icon-btn:active{ transform: translateY(1px) scale(.99); }
+
+/* Основной контент */
+main{ padding-bottom: 84px; } /* чтобы не перекрывалось нижним меню */
+
+.panel{
+  margin-top: 14px;
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 14px;
+  backdrop-filter: blur(6px);
+}
+.panel h2{
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+  color: #f2f4ff;
+  letter-spacing: .2px;
+}
+.muted{ color: var(--muted); }
+
+/* Таб-контент */
+.tab-content{ display: none; }
+.tab-content.active{ display: block; }
+
+/* Нижнее меню с двумя вкладками */
+.tabbar{
+  position: sticky;
+  bottom: 0;
+  padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+  background: linear-gradient(180deg, rgba(15,20,51,0.2), rgba(15,20,51,0.55));
+  backdrop-filter: blur(8px) saturate(1.1);
+  border-top: 1px solid var(--border);
+}
+.tabs{
+  width: min(480px, 100%);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.tab-btn{
+  appearance: none;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px 10px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+  color: var(--text);
+  font-weight: 600;
+  letter-spacing: .2px;
+  cursor: pointer;
+  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease, transform .06s ease;
+}
+.tab-btn:hover{ border-color: color-mix(in oklab, var(--accent-2) 40%, white 0%); }
+.tab-btn:active{ transform: translateY(1px); }
+.tab-btn.active{
+  background: linear-gradient(135deg, rgba(159,140,255,0.35), rgba(104,182,255,0.28));
+  border-color: color-mix(in oklab, var(--accent) 50%, var(--accent-2) 50%);
+  box-shadow: 0 4px 16px rgba(159,140,255,0.25);
+}
+
+/* Небольшие брейкпоинты под узкие экраны */
+@media (max-width: 349px){
+  .icon-btn{ width: 40px; height: 40px; }
+  .search-input{ padding: 10px 12px; }
+  .tab-btn{ padding: 10px 8px; font-weight: 600; }
+}
